@@ -379,7 +379,7 @@ void ofxOpenNI::stop(){
 
 //--------------------------------------------------------------
 void ofxOpenNI::stopCommon(){
-	if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+	if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
 
     if(g_bIsRecordOn){
         cout << LOG_NAME << ": releasing recorder" << endl;
@@ -490,7 +490,7 @@ void ofxOpenNI::logErrors(xn::EnumerationErrors & errors){
 
 //--------------------------------------------------------------
 bool ofxOpenNI::startRecording(string oniFileName, XnCodecID depthFormat, XnCodecID imageFormat, XnCodecID infraFormat, XnCodecID audioFormat){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     if(!g_bIsRecordOn){
         XnStatus nRetVal = XN_STATUS_OK;
         oniFilePath = ofToDataPath(oniFileName);
@@ -725,7 +725,7 @@ bool ofxOpenNI::isPlaying(){
 
 //--------------------------------------------------------------
 bool ofxOpenNI::addDepthGenerator(){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     addGenerator(XN_NODE_TYPE_DEPTH, g_bIsDepthOn);
     if(g_bIsDepthOn) allocateDepthBuffers();
     setMirror(bUseMirror);
@@ -734,7 +734,7 @@ bool ofxOpenNI::addDepthGenerator(){
 
 //--------------------------------------------------------------
 bool ofxOpenNI::addImageGenerator(){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     addGenerator(XN_NODE_TYPE_IMAGE, g_bIsImageOn);
     if(g_bIsImageOn) allocateImageBuffers();
     setMirror(bUseMirror);
@@ -743,7 +743,7 @@ bool ofxOpenNI::addImageGenerator(){
 
 //--------------------------------------------------------------
 bool ofxOpenNI::addInfraGenerator(){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     addGenerator(XN_NODE_TYPE_IR, g_bIsInfraOn);
     if(g_bIsInfraOn) allocateIRBuffers();
     setMirror(bUseMirror);
@@ -752,7 +752,7 @@ bool ofxOpenNI::addInfraGenerator(){
 
 //--------------------------------------------------------------
 bool ofxOpenNI::addUserGenerator(){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     if(instanceID > 0) {
         // see: http://groups.google.com/group/openni-dev/browse_thread/thread/188a2ac823584117
         ofLogWarning(LOG_NAME) << "Currently it is only possible to have a user generator on one device in a single process!!";
@@ -766,7 +766,7 @@ bool ofxOpenNI::addUserGenerator(){
 
 //--------------------------------------------------------------
 bool ofxOpenNI::addGestureGenerator(){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     addGenerator(XN_NODE_TYPE_GESTURE, g_bIsGestureOn);
     if(g_bIsGestureOn) allocateGestures();
 	return g_bIsGestureOn;
@@ -774,7 +774,7 @@ bool ofxOpenNI::addGestureGenerator(){
 
 //--------------------------------------------------------------
 bool ofxOpenNI::addHandsGenerator(){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     addGenerator(XN_NODE_TYPE_HANDS, g_bIsHandsOn);
     if(g_bIsHandsOn) allocateHands();
 	return g_bIsHandsOn;
@@ -782,13 +782,13 @@ bool ofxOpenNI::addHandsGenerator(){
 
 //--------------------------------------------------------------
 bool ofxOpenNI::addAudioGenerator(){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
 	ofLogWarning(LOG_NAME) << "Not yet implimented";
     return false;
 }
 
 void ofxOpenNI::addGenerator(XnPredefinedProductionNodeType type, bool & bIsOn){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     string generatorType = getNodeTypeAsString(type);
     ofLogNotice(LOG_NAME) << "Adding generator type" << generatorType;
     XnStatus nRetVal = XN_STATUS_OK;
@@ -876,56 +876,56 @@ void ofxOpenNI::addGenerator(XnPredefinedProductionNodeType type, bool & bIsOn){
 
 //--------------------------------------------------------------
 bool ofxOpenNI::removeDepthGenerator(){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     removeGenerator(XN_NODE_TYPE_DEPTH, g_bIsDepthOn);
     return !g_bIsDepthOn;
 }
 
 //--------------------------------------------------------------
 bool ofxOpenNI::removeImageGenerator(){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     removeGenerator(XN_NODE_TYPE_IMAGE, g_bIsImageOn);
     return !g_bIsImageOn;
 }
 
 //--------------------------------------------------------------
 bool ofxOpenNI::removeInfraGenerator(){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     removeGenerator(XN_NODE_TYPE_IR, g_bIsInfraOn);
     return !g_bIsInfraOn;
 }
 
 //--------------------------------------------------------------
 bool ofxOpenNI::removeUserGenerator(){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     removeGenerator(XN_NODE_TYPE_USER, g_bIsUserOn);
     return !g_bIsUserOn;
 }
 
 //--------------------------------------------------------------
 bool ofxOpenNI::removeGestureGenerator(){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     removeGenerator(XN_NODE_TYPE_GESTURE, g_bIsGestureOn);
     return !g_bIsGestureOn;
 }
 
 //--------------------------------------------------------------
 bool ofxOpenNI::removeHandsGenerator(){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     removeGenerator(XN_NODE_TYPE_HANDS, g_bIsHandsOn);
     return !g_bIsHandsOn;
 }
 
 //--------------------------------------------------------------
 bool ofxOpenNI::removeAudioGenerator(){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     ofLogWarning(LOG_NAME) << "Not yet implimented";
     return false;
 }
 
 //--------------------------------------------------------------
 void ofxOpenNI::removeGenerator(XnPredefinedProductionNodeType type, bool & bIsOn){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     string generatorType = getNodeTypeAsString(type);
     ofLogNotice(LOG_NAME) << "Removing generator type" << generatorType;
     XnStatus nRetVal = XN_STATUS_OK;
@@ -992,7 +992,7 @@ void ofxOpenNI::removeGenerator(XnPredefinedProductionNodeType type, bool & bIsO
 
 //--------------------------------------------------------------
 void ofxOpenNI::allocateDepthBuffers(){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     if(depthPixels[0].getWidth() != width || depthPixels[0].getHeight() != height){
         ofLogVerbose(LOG_NAME) << "Allocating depth";
         maxDepth = g_Depth.GetDeviceMaxDepth();
@@ -1007,7 +1007,7 @@ void ofxOpenNI::allocateDepthBuffers(){
 
 //--------------------------------------------------------------
 void ofxOpenNI::allocateDepthRawBuffers(){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     if(depthRawPixels[0].getWidth() != width || depthRawPixels[0].getHeight() != height){
         ofLogVerbose(LOG_NAME) << "Allocating depth raw";
         maxDepth = g_Depth.GetDeviceMaxDepth();
@@ -1020,7 +1020,7 @@ void ofxOpenNI::allocateDepthRawBuffers(){
 
 //--------------------------------------------------------------
 void ofxOpenNI::allocateImageBuffers(){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     if(imagePixels[0].getWidth() != width || imagePixels[0].getHeight() != height){
         ofLogVerbose(LOG_NAME) << "Allocating image";
         imagePixels[0].allocate(width, height, OF_IMAGE_COLOR);
@@ -1033,7 +1033,7 @@ void ofxOpenNI::allocateImageBuffers(){
 
 //--------------------------------------------------------------
 void ofxOpenNI::allocateIRBuffers(){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     if(imagePixels[0].getWidth() != width || imagePixels[0].getHeight() != height){
         ofLogVerbose(LOG_NAME) << "Allocating infra";
         imagePixels[0].allocate(width, height, OF_IMAGE_GRAYSCALE);
@@ -1046,7 +1046,7 @@ void ofxOpenNI::allocateIRBuffers(){
 
 //--------------------------------------------------------------
 bool ofxOpenNI::allocateUsers(){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     ofLogVerbose(LOG_NAME) << "Allocating users";
 
     XnStatus nRetVal = XN_STATUS_OK;
@@ -1100,7 +1100,7 @@ bool ofxOpenNI::allocateUsers(){
 
 //--------------------------------------------------------------
 bool ofxOpenNI::allocateGestures(){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     ofLogVerbose(LOG_NAME) << "Allocating gestures";
     XnStatus nRetVal = XN_STATUS_OK;
     lastGestureEvent.timestampMillis = 0; // used to know this is first event in CB handlers
@@ -1111,7 +1111,7 @@ bool ofxOpenNI::allocateGestures(){
 
 //--------------------------------------------------------------
 bool ofxOpenNI::allocateHands(){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     ofLogVerbose(LOG_NAME) << "Allocating hands";
     currentTrackedHands.clear();
     currentTrackedHandIDs.clear();
@@ -1334,7 +1334,7 @@ void ofxOpenNI::updateGenerators(){
 
 //--------------------------------------------------------------
 void ofxOpenNI::updateDepthPixels(){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
 	// get the pixels
 	const XnDepthPixel* depth = g_DepthMD.Data();
 
@@ -1400,14 +1400,14 @@ void ofxOpenNI::updateDepthPixels(){
 
 //--------------------------------------------------------------
 void ofxOpenNI::updateImagePixels(){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
 	const XnUInt8* pImage = g_ImageMD.Data();
 	backImagePixels->setFromPixels(pImage, g_ImageMD.XRes(), g_ImageMD.YRes(), OF_IMAGE_COLOR);
 }
 
 //--------------------------------------------------------------
 void ofxOpenNI::updateIRPixels(){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
 	const XnIRPixel* pImage = g_InfraMD.Data();
     unsigned char * ir_pixels = new unsigned char[g_InfraMD.XRes() * g_InfraMD.YRes()];
 	for (int i = 0; i < g_InfraMD.XRes() * g_InfraMD.YRes(); i++){
@@ -1426,7 +1426,7 @@ void ofxOpenNI::updateIRPixels(){
 //--------------------------------------------------------------
 void ofxOpenNI::updateHandTracker(){
     
-	if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+	if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     
 	int index = 0;
 	map<XnUserID, ofxOpenNIHand>::iterator it;
@@ -1458,7 +1458,7 @@ void ofxOpenNI::updateHandTracker(){
 
 //--------------------------------------------------------------
 void ofxOpenNI::updateUserTracker(){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
 
 	vector<XnUserID> userIDs(maxNumUsers);
     XnUInt16 xnMaxNumUsers = maxNumUsers;
@@ -1529,7 +1529,7 @@ void ofxOpenNI::updateUserTracker(){
 
 //--------------------------------------------------------------
 void ofxOpenNI::updatePointClouds(ofxOpenNIUser & user){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
 	const XnRGB24Pixel*	pColor;
 	const XnDepthPixel*	pDepth = g_DepthMD.Data();
 
@@ -1562,7 +1562,7 @@ void ofxOpenNI::updatePointClouds(ofxOpenNIUser & user){
 
 //--------------------------------------------------------------
 void ofxOpenNI::updateUserPixels(ofxOpenNIUser & user){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     if(user.maskPixels.getWidth() != getWidth() || user.maskPixels.getHeight() != getHeight()){
         user.maskPixels.allocate(getWidth(), getHeight(), user.getMaskPixelFormat());
     }
@@ -1615,7 +1615,7 @@ void ofxOpenNI::updateUserPixels(ofxOpenNIUser & user){
 
 //--------------------------------------------------------------
 void ofxOpenNI::updateRecorder(){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     XnStatus nRetVal = XN_STATUS_OK;
     switch(g_ONITask){
         case ONI_START_RECORD:
@@ -1688,7 +1688,7 @@ void ofxOpenNI::updateRecorder(){
 
 //--------------------------------------------------------------
 void ofxOpenNI::updateDepthThresholds(const unsigned short& depth, ofColor& depthColor, int nX, int nY){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     int nIndex = nY * getWidth() + nX;
     ofPoint p = ofPoint(nX, nY, depth);
     for(int i = 0; i < currentDepthThresholds.size(); i++){
@@ -1831,7 +1831,7 @@ int	ofxOpenNI::getNumTrackedUsers(){
 
 //--------------------------------------------------------------
 ofxOpenNIUser& ofxOpenNI::getTrackedUser(int index){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     if(index > currentTrackedUserIDs.size()){
         ofLogError(LOG_NAME) << "no tracked user for that index...have you called getNumTrackedUsers()? Returning garbage baseUser";
         return baseUser;
@@ -1841,7 +1841,7 @@ ofxOpenNIUser& ofxOpenNI::getTrackedUser(int index){
 
 //--------------------------------------------------------------
 void ofxOpenNI::setMaxNumUsers(int numUsers){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     maxNumUsers = numUsers;
 }
 
@@ -2210,13 +2210,13 @@ int	ofxOpenNI::getNumTrackedHands(){
 
 //--------------------------------------------------------------
 ofxOpenNIHand& ofxOpenNI::getTrackedHand(int index){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     return currentTrackedHands[currentTrackedHandIDs[index]];
 }
 
 //--------------------------------------------------------------
 ofxOpenNIHand& ofxOpenNI::getHand(XnUserID nID){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     ofxOpenNIHand & hand = baseHand;
     map<XnUserID, ofxOpenNIHand>::iterator it = currentTrackedHands.find(nID);
     if(it != currentTrackedHands.end()){
@@ -2277,7 +2277,7 @@ void ofxOpenNI::setBaseHandClass(ofxOpenNIHand & hand){
 
 //--------------------------------------------------------------
 void ofxOpenNI::addDepthThreshold(ofxOpenNIDepthThreshold & depthThreshold){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     currentDepthThresholds.push_back(depthThreshold);
 }
 
@@ -2294,7 +2294,7 @@ int ofxOpenNI::getNumDepthThresholds(){
 
 //--------------------------------------------------------------
 ofxOpenNIDepthThreshold & ofxOpenNI::getDepthThreshold(int index){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     return currentDepthThresholds[index];
 }
 
@@ -2492,7 +2492,7 @@ void handleSignal(int err){
 
 //--------------------------------------------------------------
 void ofxOpenNI::setSafeThreading(bool b){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     bUseSafeThreading = b;
     if(b) return;
 #if defined (TARGET_OSX) && defined (USE_SIGNALS_HACK)
@@ -2520,7 +2520,7 @@ bool ofxOpenNI::getSafeThreading(){
 
 //--------------------------------------------------------------
 void ofxOpenNI::setUseBackgroundDepthSubtraction(bool b){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     bUseBackgroundSubtraction = b;
 }
 
@@ -2531,7 +2531,7 @@ bool ofxOpenNI::getUseBackgroundDepthSubtraction(){
 
 //--------------------------------------------------------------
 void ofxOpenNI::setCaptureBackgroundDepthPixels(bool b){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     if(b) bInitGrabBackgroundPixels = true;
     bGrabBackgroundPixels = b;
 }
@@ -2543,7 +2543,7 @@ bool ofxOpenNI::getCaptureBackgroundDepthPixels(){
 
 //--------------------------------------------------------------
 void ofxOpenNI::setUseDepthRawPixels(bool b){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     if(b) allocateDepthRawBuffers();
     g_bIsDepthRawOn = b;
 }
@@ -2581,7 +2581,7 @@ bool ofxOpenNI::isNewFrame(){
 
 //--------------------------------------------------------------
 ofPixels& ofxOpenNI::getDepthPixels(){
-	if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+	if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
 	if(bUseBackBuffer){
         return *currentDepthPixels;
     }else{
@@ -2591,7 +2591,7 @@ ofPixels& ofxOpenNI::getDepthPixels(){
 
 //--------------------------------------------------------------
 ofShortPixels& ofxOpenNI::getDepthRawPixels(){
-	if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+	if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
 	if(!g_bIsDepthRawOn){
 		ofLogWarning(LOG_NAME) << "g_bIsDepthRawOn was disabled, enabling raw pixels. Should really call setUseDepthRawPixels(true) first?";
 		setUseDepthRawPixels(true);
@@ -2605,7 +2605,7 @@ ofShortPixels& ofxOpenNI::getDepthRawPixels(){
 
 //--------------------------------------------------------------
 ofPixels& ofxOpenNI::getImagePixels(){
-	if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+	if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     if(bUseBackBuffer){
         return *currentImagePixels;
     }else{
@@ -2615,13 +2615,13 @@ ofPixels& ofxOpenNI::getImagePixels(){
 
 //--------------------------------------------------------------
 ofTexture& ofxOpenNI::getDepthTextureReference(){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
 	return depthTexture;
 }
 
 //--------------------------------------------------------------
 ofTexture& ofxOpenNI::getimageTextureReference(){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
 	return imageTexture;
 }
 
@@ -2633,7 +2633,7 @@ ofTexture& ofxOpenNI::getimageTextureReference(){
 
 //--------------------------------------------------------------
 bool ofxOpenNI::setResolution(int w, int h, int f){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
 
     ofLogWarning(LOG_NAME) << "Not implimented";
     return false; // uncomment to give it a try
@@ -2663,7 +2663,7 @@ bool ofxOpenNI::setResolution(int w, int h, int f){
 
 //--------------------------------------------------------------
 bool ofxOpenNI::setGeneratorResolution(xn::MapGenerator & generator, int w, int h, int f){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     XnMapOutputMode mapMode;
     XnStatus nRetVal = XN_STATUS_OK;
     mapMode.nXRes = w; mapMode.nYRes = h; mapMode.nFPS  = f;
@@ -2705,7 +2705,7 @@ float ofxOpenNI::getHeight(){
 }
 
 float ofxOpenNI::getFrameRate(){
-	if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+	if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     // this returns a calcualted frame rate based on threaded/normal updates NOT the device target frame rate
     return frameRate;
 }
@@ -2852,7 +2852,7 @@ xn::AudioMetaData& ofxOpenNI::getAudioMetaData(){
 
 //--------------------------------------------------------------
 void ofxOpenNI::startTrackingUser(XnUserID nID){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     XnStatus nRetVal = XN_STATUS_OK;
     ofLogNotice(LOG_NAME) << "Start tracking user" << nID;
 	nRetVal = g_User.GetSkeletonCap().StartTracking(nID);
@@ -2868,7 +2868,7 @@ void ofxOpenNI::startTrackingUser(XnUserID nID){
 
 //--------------------------------------------------------------
 void ofxOpenNI::stopTrackingUser(XnUserID nID){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     XnStatus nRetVal = XN_STATUS_OK;
     if(g_User.GetSkeletonCap().IsCalibrating(nID)){// || g_User.GetSkeletonCap().IsCalibrated(nID)){
         ofLogNotice(LOG_NAME) << "Calibration stopped for user" << nID;
@@ -2893,7 +2893,7 @@ void ofxOpenNI::stopTrackingUser(XnUserID nID){
 
 //--------------------------------------------------------------
 void ofxOpenNI::requestCalibration(XnUserID nID){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     XnStatus nRetVal = XN_STATUS_OK;
     if(getNumTrackedUsers() + 1 > getMaxNumUsers()){
         ofLogVerbose(LOG_NAME) << "Calibration requested cancelled for user" << nID << "since maxNumUsers is" << maxNumUsers;
@@ -2919,7 +2919,7 @@ void ofxOpenNI::requestCalibration(XnUserID nID){
 
 //--------------------------------------------------------------
 void ofxOpenNI::startPoseDetection(XnUserID nID){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     XnStatus nRetVal = XN_STATUS_OK;
     if(getNumTrackedUsers() + 1 > getMaxNumUsers()){
         ofLogVerbose(LOG_NAME) << "Pose detection cancelled for user" << nID << "since maxNumUsers is" << maxNumUsers;
@@ -2946,7 +2946,7 @@ void ofxOpenNI::startPoseDetection(XnUserID nID){
 
 //--------------------------------------------------------------
 void ofxOpenNI::stopPoseDetection(XnUserID nID){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     XnStatus nRetVal = XN_STATUS_OK;
     ofLogNotice(LOG_NAME) << "Stop pose detection for user" << nID;
 	nRetVal = g_User.GetPoseDetectionCap().StopPoseDetection(nID);
@@ -3169,7 +3169,7 @@ void ofxOpenNI::drawDebug(float x, float y){
 
 //--------------------------------------------------------------
 void ofxOpenNI::drawDebug(float x, float y, float w, float h){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
 	if(!bIsContextReady) return;
 
     int generatorCount = g_bIsDepthOn + g_bIsImageOn + g_bIsInfraOn;
@@ -3225,7 +3225,7 @@ void ofxOpenNI::drawDepth(float x, float y){
 
 //--------------------------------------------------------------
 void ofxOpenNI::drawDepth(float x, float y, float w, float h){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
 	if(bUseTexture && bIsContextReady) depthTexture.draw(x, y, w, h);
 }
 
@@ -3247,7 +3247,7 @@ void ofxOpenNI::drawImage(float x, float y){
 
 //--------------------------------------------------------------
 void ofxOpenNI::drawImage(float x, float y, float w, float h){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
 	if(bUseTexture && bIsContextReady) imageTexture.draw(x, y, w, h);
 }
 
@@ -3269,7 +3269,7 @@ void ofxOpenNI::drawSkeletons(float x, float y){
 
 //--------------------------------------------------------------
 void ofxOpenNI::drawSkeletons(float x, float y, float w, float h){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
 	if(!bIsContextReady) return;
     for(int i = 0;  i < getNumTrackedUsers(); ++i){
         drawSkeleton(x, y, w, h, i);
@@ -3288,7 +3288,7 @@ void ofxOpenNI::drawSkeleton(float x, float y, int nID){
 
 //--------------------------------------------------------------
 void ofxOpenNI::drawSkeleton(float x, float y, float w, float h, int nID){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
 	if(nID - 1 > getNumTrackedUsers()) return;
     ofPushStyle();
     ofPushMatrix();
@@ -3317,7 +3317,7 @@ void ofxOpenNI::drawHands(float x, float y){
 
 //--------------------------------------------------------------
 void ofxOpenNI::drawHands(float x, float y, float w, float h){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     for (int i = 0; i < getNumTrackedHands(); i++) {
         drawHand(i);
     }
@@ -3335,7 +3335,7 @@ void ofxOpenNI::drawHand(float x, float y, int index){
 
 //--------------------------------------------------------------
 void ofxOpenNI::drawHand(float x, float y, float w, float, int index){
-    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if(bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     if(index > getNumTrackedHands()) return;
     ofPushStyle();
     ofPushMatrix();
