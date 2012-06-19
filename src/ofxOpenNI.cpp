@@ -2862,7 +2862,7 @@ void ofxOpenNI::startTrackingUser(XnUserID nID){
         currentTrackedUsers[nID].bIsTracking = true;
         currentTrackedUsers[nID].bIsCalibrating = false;
         ofxOpenNIUserEvent event = ofxOpenNIUserEvent(getDeviceID(), USER_TRACKING_STARTED, nID, ofGetElapsedTimeMillis());
-        ofNotifyEvent(userEvent, event, this);
+        ofNotifyEvent( ofxOpenNIUserEventDispatcher, event, this);
     }
 }
 
@@ -2888,7 +2888,7 @@ void ofxOpenNI::stopTrackingUser(XnUserID nID){
     currentTrackedUsers[nID].bIsSkeleton = false;
     currentTrackedUsers[nID].bIsCalibrating = false;
     ofxOpenNIUserEvent event = ofxOpenNIUserEvent(getDeviceID(), USER_TRACKING_STOPPED, nID, ofGetElapsedTimeMillis());
-    ofNotifyEvent(userEvent, event, this);
+    ofNotifyEvent( ofxOpenNIUserEventDispatcher, event );
 }
 
 //--------------------------------------------------------------
@@ -2913,7 +2913,7 @@ void ofxOpenNI::requestCalibration(XnUserID nID){
         currentTrackedUsers[nID].bIsFound = true;
         currentTrackedUsers[nID].bIsCalibrating = true;
         ofxOpenNIUserEvent event = ofxOpenNIUserEvent(getDeviceID(), USER_CALIBRATION_STARTED, nID, ofGetElapsedTimeMillis());
-        ofNotifyEvent(userEvent, event, this);
+        ofNotifyEvent( ofxOpenNIUserEventDispatcher, event, this);
     }
 }
 
@@ -2940,7 +2940,7 @@ void ofxOpenNI::startPoseDetection(XnUserID nID){
         currentTrackedUsers[nID].bIsFound = true;
         currentTrackedUsers[nID].bIsCalibrating = true;
         ofxOpenNIUserEvent event = ofxOpenNIUserEvent(getDeviceID(), USER_CALIBRATION_STARTED, nID, ofGetElapsedTimeMillis());
-        ofNotifyEvent(userEvent, event, this);
+        ofNotifyEvent( ofxOpenNIUserEventDispatcher, event, this);
     }
 }
 
@@ -2955,7 +2955,7 @@ void ofxOpenNI::stopPoseDetection(XnUserID nID){
     if(nRetVal == XN_STATUS_OK){
         currentTrackedUsers[nID].bIsCalibrating = false;
         ofxOpenNIUserEvent event = ofxOpenNIUserEvent(getDeviceID(), USER_CALIBRATION_STOPPED, nID, ofGetElapsedTimeMillis());
-        ofNotifyEvent(userEvent, event, this);
+        ofNotifyEvent( ofxOpenNIUserEventDispatcher, event, this);
     }
 }
 
