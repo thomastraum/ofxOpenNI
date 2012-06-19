@@ -465,6 +465,12 @@ string ofxOpenNIUser::getDebugInfo(){
 
 
 
+
+//-------------------------------------------------------------- TTTTTT EEEEEEVENTS
+ofEvent<ofxOpenNIUserEvent> ofxOpenNIUserEventDispatcher;
+
+
+
 //--------------------------------------------------------------
 ofxOpenNIDepthThreshold::ofxOpenNIDepthThreshold(){
     ofPoint lbn = ofPoint(0, 0, 0);

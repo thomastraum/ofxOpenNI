@@ -544,6 +544,8 @@ public:
     
 };
 
+extern ofEvent<ofxOpenNIUserEvent> ofxOpenNIUserEventDispatcher;
+
 class ofxOpenNIROI {
     
 public:

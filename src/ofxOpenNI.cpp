@@ -1520,7 +1520,7 @@ void ofxOpenNI::updateUserTracker(){
             if(user.isSkeleton() != lastbIsSkeleton){
                 ofLogNotice(LOG_NAME) << "Skeleton" << (string)(user.isSkeleton() ? "found" : "lost") << "for user" << user.getXnID();
                 ofxOpenNIUserEvent event = ofxOpenNIUserEvent(getDeviceID(), (user.isSkeleton() ? USER_SKELETON_FOUND : USER_SKELETON_LOST), user.getXnID(), ofGetElapsedTimeMillis());
-                ofNotifyEvent(userEvent, event, this);
+                ofNotifyEvent(ofxOpenNIUserEventDispatcher, event);
             }
 		}
 	}
