@@ -1520,7 +1520,7 @@ void ofxOpenNI::updateUserTracker(){
             if(user.isSkeleton() != lastbIsSkeleton){
                 ofLogNotice(LOG_NAME) << "Skeleton" << (string)(user.isSkeleton() ? "found" : "lost") << "for user" << user.getXnID();
                 ofxOpenNIUserEvent event = ofxOpenNIUserEvent(getDeviceID(), (user.isSkeleton() ? USER_SKELETON_FOUND : USER_SKELETON_LOST), user.getXnID(), ofGetElapsedTimeMillis());
-                ofNotifyEvent(ofxOpenNIUserEventDispatcher, event);
+                ofNotifyEvent( ofxOpenNIUserEventDispatcher, event);
             }
 		}
 	}
@@ -1812,7 +1812,7 @@ XnSkeletonProfile ofxOpenNI::getSkeletonProfile(){
 
 //--------------------------------------------------------------
 void ofxOpenNI::resetUserTracking(XnUserID nID, bool forceImmediateRestart){
-    if (bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if (bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     if(currentTrackedUsers.find(nID) == currentTrackedUsers.end()) return;
     stopTrackingUser(nID);
     if(forceImmediateRestart) startTrackingUser(nID);
@@ -1825,7 +1825,7 @@ bool ofxOpenNI::getAutoUserCalibrationPossible(){
 
 //--------------------------------------------------------------
 int	ofxOpenNI::getNumTrackedUsers(){
-    if (bIsThreaded) Poco::ScopedLock<ofMutex> lock(mutex);
+    if (bIsThreaded) Poco::ScopedLock<ofMutex> lock();
     return currentTrackedUserIDs.size();
 }
 
